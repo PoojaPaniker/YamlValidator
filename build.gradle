@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'java-gradle-plugin'
+    //id 'com.osb.validator.plugin.applicationPropertiesValidator'
+   id 'com.gradle.plugin-publish' version '1.2.0'
+}
+
+group 'com.osb.validator'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    implementation 'org.yaml:snakeyaml:2.0'
+    compileOnly gradleApi()
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    implementation 'org.jeasy:easy-rules-mvel:4.1.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+gradlePlugin {
+    plugins {
+        yaml {
+            id = 'com.osb.validator.plugin.applicationPropertiesValidator'
+            implementationClass = 'com.osb.validator.gradle.ApplicationPropertiesValidatorPlugin'
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
